@@ -50,7 +50,7 @@ jobs:
           make -j$(nproc)
 
       - name: Upload QEMU Binaries
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: qemu-binaries
           path: qemu/${{ env.ARCH }}-softmmu/qemu-system-*
