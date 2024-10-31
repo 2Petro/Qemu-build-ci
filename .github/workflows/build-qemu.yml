@@ -77,9 +77,11 @@ jobs:
           cd qemu
           ./configure --target-list=${{ env.ARCH }}-softmmu,arm-linux-user --enable-gtk --enable-sdl
           make -j$(nproc)
+          ls build
+          ls build/*
 
       - name: Upload QEMU Binaries
         uses: actions/upload-artifact@v3
         with:
           name: qemu-binaries
-          path: qemu/${{ env.ARCH }}-softmmu/qemu-system-*
+          path: qemu/build/${{ env.ARCH }}-softmmu/qemu-system-*
