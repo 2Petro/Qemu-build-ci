@@ -31,7 +31,6 @@ jobs:
             python3-sphinx \
             python3-sphinx-rtd-theme \
             python3-pip \
-            git-email \
             libaio-dev \
             libbluetooth-dev \
             libcapstone-dev \
