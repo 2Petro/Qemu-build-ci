@@ -1,0 +1,56 @@
+name: Build QEMU
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU build environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git \
+            make \
+            gcc \
+            python3 \
+            ninja-build \
+            pkg-config \
+            libsdl2-dev \
+            libglib2.0-dev \
+            libpixman-1-dev
+
+      - name: Parse architecture
+        id: parse_arch
+        run: |
+          ARCH=$(cat arch.txt)
+          echo "ARCH=${ARCH}" >> $GITHUB_ENV
+
+      - name: Clone QEMU
+        run: |
+          git clone https://git.qemu.org/git/qemu.git
+          cd qemu
+          git fetch --tags
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          git checkout $latest_tag
+
+      - name: Build QEMU
+        run: |
+          cd qemu
+          ./configure --target-list=${{ env.ARCH }}-softmmu --enable-gtk --enable-sdl
+          make -j$(nproc)
+
+      - name: Upload QEMU Binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: qemu-binaries
+          path: qemu/${{ env.ARCH }}-softmmu/qemu-system-*
