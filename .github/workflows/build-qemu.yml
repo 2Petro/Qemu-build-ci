@@ -30,7 +30,33 @@ jobs:
             libpixman-1-dev \
             python3-sphinx \
             python3-sphinx-rtd-theme \
-            python3-pip
+            python3-pip \
+            git-email \
+            libaio-dev \
+            libbluetooth-dev \
+            libcapstone-dev \
+            libbrlapi-dev \
+            libbz2-dev \
+            libcap-ng-dev \
+            libcurl4-gnutls-dev \
+            libgtk-3-dev \
+            libibverbs-dev \
+            libjpeg8-dev \
+            libncurses5-dev \
+            libnuma-dev \
+            librbd-dev \
+            librdmacm-dev \
+            libsasl2-dev \
+            libseccomp-dev \
+            libsnappy-dev \
+            libssh-dev \
+            libvde-dev \
+            libvdeplug-dev \
+            libvte-2.91-dev \
+            libxen-dev \
+            liblzo2-dev \
+            valgrind \
+            xfslibs-dev
           pip install sphinx==5.3.0
 
       - name: Parse architecture
@@ -46,7 +72,6 @@ jobs:
           git fetch --tags
           latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
           git checkout $latest_tag
-          echo "QEMU $latest_tag"
 
       - name: Build QEMU
         run: |
