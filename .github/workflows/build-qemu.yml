@@ -46,6 +46,7 @@ jobs:
           git fetch --tags
           latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
           git checkout $latest_tag
+          echo "QEMU $latest_tag"
 
       - name: Build QEMU
         run: |
