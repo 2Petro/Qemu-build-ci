@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
     gcc-aarch64-linux-gnu \
     gcc-arm-linux-gnueabihf \
     pkg-config \
+    python3 \
+    python3-sphinx \
+    python3-venv \
     libglib2.0-dev \
     libpixman-1-dev \
     libaio-dev \
