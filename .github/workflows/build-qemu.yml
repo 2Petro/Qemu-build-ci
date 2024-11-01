@@ -84,4 +84,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: qemu-binaries
-          path: qemu/build/${{ env.ARCH }}-softmmu/qemu-system-*
+          path: qemu/build/qemu-system-*
