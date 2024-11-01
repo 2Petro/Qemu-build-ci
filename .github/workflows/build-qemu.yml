@@ -33,7 +33,7 @@ jobs:
       - name: Build and output binaries
         run: |
           mkdir -p ${{ github.workspace }}/output
-          DOCKER_BUILDKIT=1 docker build --output type=local,dest=${{ github.workspace }}/output .
+          docker build -t qemu-arm-builder .
           
       - name: Upload QEMU Binaries
         uses: actions/upload-artifact@v3
