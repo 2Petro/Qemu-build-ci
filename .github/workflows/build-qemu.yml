@@ -34,18 +34,9 @@ jobs:
         run: |
           docker build -t qemu-arm-builder .
 
-      - name: Run Docker container
+      - name: Mount build to host
         run: |
-          docker run -d --name qemu-arm-builder --platform linux/arm64 qemu-arm-builder
-
-      - name: Copy QEMU binaries to output
-        run: |
-          mkdir -p ${{ github.workspace }}/output
-          docker cp qemu-arm-builder:/qemu/build_output/qemu-system-* ${{ github.workspace }}/output/
-
-      - name: Remove Docker container
-        run: |
-          docker rm -f qemu-arm-builder
+          docker run -v ${{ github.workspace }}/output:/qemu/build_output --name qemu-arm-builder qemu-arm-builder
 
       - name: Upload QEMU Binaries
         uses: actions/upload-artifact@v3
