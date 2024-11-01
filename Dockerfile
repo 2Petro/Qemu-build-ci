@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-sphinx \
     python3-venv \
+    python3-sphinx \       
+    python3-tomli \
     libglib2.0-dev \
     libpixman-1-dev \
     libaio-dev \
