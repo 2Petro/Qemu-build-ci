@@ -78,7 +78,7 @@ jobs:
       - name: Build QEMU
         run: |
           cd qemu
-          ./configure --target-list=${{ env.ARCH }}-softmmu,arm-linux-user --cross-prefix=aarch64-linux-gnu- --enable-gtk --enable-sdl
+          ./configure --target-list=${{ env.ARCH }}-softmmu,arm-linux-user --enable-gtk --enable-sdl
           make -j$(nproc)
 
       - name: Upload QEMU Binaries
