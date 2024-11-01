@@ -23,6 +23,9 @@ jobs:
             make \
             gcc \
             python3 \
+            gcc-aarch64-linux-gnu \
+            g++-arm-linux-gnueabi \
+            g++-aarch64-linux-gnu \
             ninja-build \
             pkg-config \
             libsdl2-dev \
