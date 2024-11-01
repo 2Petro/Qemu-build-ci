@@ -20,6 +20,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Enable QEMU emulation
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu binfmt-support qemu-user-static
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
       - name: Create arch.txt
         run: |
           echo "aarch64" > arch.txt  # Change this to "arm" if needed
