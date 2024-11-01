@@ -67,6 +67,3 @@ RUN ARCH=aarch64 && \
 RUN mkdir -p /qemu/build_output && \
     cp -r /qemu/build/qemu-system-* /qemu/build_output/ && \
     ls /qemu/build_output
-
-# Final command to keep the container running (not strictly necessary)
-CMD ["tail", "-f", "/dev/null"]
