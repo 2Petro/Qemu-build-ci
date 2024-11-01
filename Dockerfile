@@ -1,5 +1,5 @@
 # Use an appropriate base image
-FROM ubuntu:22.04
+FROM --platform=linux/arm64 ubuntu:22.04
 
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -53,8 +53,8 @@ RUN git fetch --tags && \
 COPY arch.txt /qemu/arch.txt
 
 # Parse the architecture
-RUN ARCH=$(cat arch.txt) && \
-    ./configure --target-list=${ARCH}-softmmu,${ARCH}-linux-user --enable-gtk --enable-sdl && \
+RUN ARCH=aarch64 && \
+    ./configure --target-list=aarch64-softmmu,arm-linux-user --enable-gtk --enable-sdl && \
     make -j$(nproc)
 
 # Output the binaries to the specified directory
