@@ -30,7 +30,7 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run --rm -v ${{ github.workspace }}/output:/qemu/build_output qemu-arm-builder
+          docker run --rm -v ${{ github.workspace }}/output:/qemu/build_output --platform linux/arm64 qemu-arm-builder
 
       - name: Upload QEMU Binaries
         uses: actions/upload-artifact@v3
