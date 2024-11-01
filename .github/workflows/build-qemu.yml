@@ -1,4 +1,4 @@
-name: Build QEMU
+name: Build QEMU for ARM
 
 on:
   push:
@@ -15,74 +15,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up QEMU build environment
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            git \
-            make \
-            gcc \
-            python3 \
-            gcc-aarch64-linux-gnu \
-            g++-arm-linux-gnueabi \
-            g++-aarch64-linux-gnu \
-            ninja-build \
-            pkg-config \
-            libsdl2-dev \
-            libglib2.0-dev \
-            libpixman-1-dev \
-            python3-sphinx \
-            python3-sphinx-rtd-theme \
-            python3-pip \
-            libaio-dev \
-            libbluetooth-dev \
-            libcapstone-dev \
-            libbrlapi-dev \
-            libbz2-dev \
-            libcap-ng-dev \
-            libcurl4-gnutls-dev \
-            libgtk-3-dev \
-            libibverbs-dev \
-            libjpeg8-dev \
-            libncurses5-dev \
-            libnuma-dev \
-            librbd-dev \
-            librdmacm-dev \
-            libsasl2-dev \
-            libseccomp-dev \
-            libsnappy-dev \
-            libssh-dev \
-            libvde-dev \
-            libvdeplug-dev \
-            libvte-2.91-dev \
-            libxen-dev \
-            liblzo2-dev \
-            valgrind \
-            xfslibs-dev
-          pip install sphinx==5.3.0
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Parse architecture
-        id: parse_arch
+      - name: Create arch.txt
         run: |
-          ARCH=$(cat arch.txt)
-          echo "ARCH=${ARCH}" >> $GITHUB_ENV
+          echo "aarch64" > arch.txt  # Change this to "arm" if needed
 
-      - name: Clone QEMU
+      - name: Build Docker image
         run: |
-          git clone https://git.qemu.org/git/qemu.git
-          cd qemu
-          git fetch --tags
-          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          git checkout $latest_tag
+          docker build -t qemu-arm-builder .
 
-      - name: Build QEMU
+      - name: Run Docker container
         run: |
-          cd qemu
-          ./configure --target-list=${{ env.ARCH }}-softmmu,arm-linux-user --enable-gtk --enable-sdl
-          make -j$(nproc)
+          docker run --rm -v ${{ github.workspace }}/output:/qemu/build_output qemu-arm-builder
 
       - name: Upload QEMU Binaries
         uses: actions/upload-artifact@v3
         with:
           name: qemu-binaries
-          path: qemu/build/qemu-system-${{ env.ARCH }}
+          path: output/*
