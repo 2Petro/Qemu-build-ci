@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - Qemu-arm
   pull_request:
     branches:
       - main
+      - Qemu-arm
 
 jobs:
   build:
