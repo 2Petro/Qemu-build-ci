@@ -68,6 +68,12 @@ RUN mkdir -p /qemu/build_output && \
     cp -r /qemu/build/qemu-system-aarch64 /qemu/build_output/ && \
     ls /qemu/build_output
 
+# Clone your GitHub repository
+RUN git clone https://github.com/2Petro/Qemu-build-ci.git /repo
+
+# Set the working directory to the cloned repo
+WORKDIR /repo
+
 # Add GitHub credentials
 ARG DOCKER_NAME
 ARG DOCKER_EMAIL
