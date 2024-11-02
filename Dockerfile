@@ -67,8 +67,8 @@ RUN ARCH=aarch64 && \
 # Output the binaries to the specified directory
 RUN mkdir -p /qemu/build_output && \
     cp -r /qemu/build/qemu-system-aarch64 /qemu/build_output/ && \
-    xz -k /qemu/build_output/qemu-system-aarch64
-    ls -lh /qemu/build_output/qemu-system-aarch64.xz
+    xz -k /qemu/build_output/qemu-system-aarch64 && \
+    ls -lh /qemu/build_output/qemu-system-aarch64.xz && \
     ls /qemu/build_output
 
 # Clone your GitHub repository
