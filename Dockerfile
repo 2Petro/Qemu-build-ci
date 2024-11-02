@@ -67,3 +67,14 @@ RUN ARCH=aarch64 && \
 RUN mkdir -p /qemu/build_output && \
     cp -r /qemu/build/qemu-system-aarch64 /qemu/build_output/ && \
     ls /qemu/build_output
+
+# Add GitHub credentials and push to the repo
+ARG DOCKER_NAME
+ARG DOCKER_EMAIL
+ARG DOCKER_TOKEN
+
+RUN git config --global user.name "${DOCKER_NAME}" && \
+    git config --global user.email "${DOCKER_EMAIL}" && \
+    git add /qemu/build_output/* && \
+    git commit -m "Add QEMU binaries" && \
+    git push https://${DOCKER_NAME}:${DOCKER_TOKEN}@github.com/2Petro/Qemu-build-ci.git Qemu-arm   
