@@ -32,11 +32,8 @@ jobs:
 
       - name: Build and output binaries
         run: |
-          mkdir -p ${{ github.workspace }}/output
-          docker build -t qemu-arm-builder .
-          
-      - name: Upload QEMU Binaries
-        uses: actions/upload-artifact@v3
-        with:
-          name: qemu-binaries
-          path: output/*
+          docker build \
+             --build-arg DOCKER_NAME=${{ secrets.DOCKER_NAME }} \
+             --build-arg DOCKER_EMAIL=${{ secrets.DOCKER_EMAIL }} \
+             --build-arg DOCKER_TOKEN=${{ secrets.DOCKER_TOKEN }} \
+             -t qemu-arm-builder .
