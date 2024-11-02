@@ -44,6 +44,7 @@ RUN apt-get update && apt-get install -y \
     valgrind \
     ninja-build \
     qemu-user-static \
+    xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone QEMU source
@@ -66,6 +67,8 @@ RUN ARCH=aarch64 && \
 # Output the binaries to the specified directory
 RUN mkdir -p /qemu/build_output && \
     cp -r /qemu/build/qemu-system-aarch64 /qemu/build_output/ && \
+    xz -k /qemu/build_output/qemu-system-aarch64
+    ls -lh /qemu/build_output/qemu-system-aarch64.xz
     ls /qemu/build_output
 
 # Clone your GitHub repository
@@ -84,7 +87,7 @@ RUN git config --global user.name "${DOCKER_NAME}" && \
     git config --global user.email "${DOCKER_EMAIL}"
 
 # Copy the QEMU binaries to the repo
-RUN cp /qemu/build_output/qemu-system-* /repo/ && \
+RUN cp /qemu/build_output/qemu-system-*.xz /repo/ && \
     git add qemu-system-* && \
     git commit -m "Add QEMU binaries" && \
     git push https://${DOCKER_NAME}:${DOCKER_TOKEN}@github.com/2Petro/Qemu-build-ci.git   
